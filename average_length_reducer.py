@@ -1,8 +1,8 @@
 #!/usr/bin/python
 '''
-Students and Posting Time on Forums
+Post and Answer Length
 
-Find for each student what is the hour during which the student has posted the most posts.
+Process the forum_node data and output the length of the post and the average answer (just answer, not comment) length for each post. 
 
 Reducer input record format
 
@@ -18,7 +18,7 @@ import sys
 def reducer():
 
     last_question = None
-    question_length = 0
+    question_length = None
     answer_count = 0
     answer_length_total = 0
 
@@ -30,9 +30,9 @@ def reducer():
             continue
 
         if last_question and question_node_id != last_question:
-            average_answer_length = float(answer_length_total) / answer_count if answer_count else 0
+            average_answer_length = float(answer_length_total) / answer_count if answer_count else None
             print "{0}\t{1}\t{2}".format(last_question, question_length, average_answer_length)
-            question_length = 0
+            question_length = None
             answer_count = 0
             answer_length_total = 0
 
@@ -45,7 +45,7 @@ def reducer():
             answer_length_total += body_length
 
     if last_question != None:
-        average_answer_length = float(answer_length_total) / answer_count if answer_count else 0
+        average_answer_length = float(answer_length_total) / answer_count if answer_count else None
         print "{0}\t{1}\t{2}".format(last_question, question_length, average_answer_length)
 
 if __name__ == "__main__":
