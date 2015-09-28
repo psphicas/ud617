@@ -26,7 +26,6 @@ def reducer():
     tag_counts = Counter()
     n = 10
     last_tag = None
-    total = 0
 
     for line in sys.stdin:
         tag, count = line.strip().split("\t")
