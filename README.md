@@ -1,5 +1,14 @@
-# ud617
-Intro to Hadoop and MapReduce
+# ud617 - Intro to Hadoop and MapReduce
+
+Programming assignments from Udacity course Intro to Hadoop and MapReduce.
+
+## Lesson 4: Combine Datasets
+
+Given a set of forum posts and a set of user info, use map-reduce to
+merge the datasets based on the shared author_id key.
+
+- [mapper](combine_datasets_mapper.py)
+- [reducer](combine_datasets_reducer.py)
 
 ## Final Project
 
@@ -33,14 +42,14 @@ list the students that have posted there.
 - [mapper](study_groups_mapper.py)
 - [reducer](study_groups_reducer.py)
 
-## Datasets
+### Datasets
 
 Udacity provides two datasets compatible with the scripts:
 
 - [small dataset](https://s3.amazonaws.com/udacity-hosted-downloads/student_test_posts.csv)
 - [full dataset](http://content.udacity-data.com/course/hadoop/forum_data.tar.gz)
 
-## Validation
+### Validation
 
 Validation instructions are provided here:
 
