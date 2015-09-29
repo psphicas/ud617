@@ -12,7 +12,8 @@ Mapper output record format:
 
 author_id   hour
 
-The hour is derived from the added_at field.
+The hour is extracted from the added_at field.
+
 '''
 
 import sys
