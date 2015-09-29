@@ -33,18 +33,69 @@ The mapper key for both types of records is the student ID:
 "user_ptr_id" from "forum_users" or  "author_id" from "forum_nodes" file. 
 Remember that during the sort and shuffle phases records will be grouped based on the student ID (12345 in our example). 
 You can use that to process and join the records appropriately in the reduce phase. 
+
+--
+
+Mapper input record format:
+
+id	title	tagnames	author_id	body	node_type	parent_id	abs_parent_id	added_at	score	state_string	last_edited_id	last_activity_by_id	last_activity_at	active_revision_id	extra	extra_ref_id	extra_count	marked
+
+OR
+
+user_ptr_id	reputation	gold	silver	bronze
+
+Mapper output record format:
+
+author_id	"B"	id	title	tagnames	node_type	parent_id	abs_parent_id	added_at	score
+
+OR
+
+user_ptr_id	"A"	reputation	gold	silver	bronze
 """
 
 import sys
 import csv
 
 def mapper():
-    reader = csv.reader(sys.stdin, delimiter='\t')
+    reader = csv.reader(sys.stdin, delimiter='\t', quotechar='"')
     writer = csv.writer(sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
 
     for line in reader:
 
-        # YOUR CODE HERE
-            
-        writer.writerow(line)
-        
+        # use the line length to determine whether this is a
+        # forum post (forum_nodes) or user record (forum_users)
+
+        # forum_nodes
+        if len(line) == 19:
+
+            # ensure author_id is numeric
+            author_id = line[3]
+            try:
+                author_id = int(author_id)
+            except ValueError:
+                continue
+
+            # create the output record
+            output = [author_id, 'B'] + line[:3] + line[5:10]
+
+        # forum_users
+        elif len(line) == 5:
+
+            # ensure author_id is numeric
+            author_id = line[0]
+            try:
+                author_id = int(author_id)
+            except ValueError:
+                continue
+
+            # create the output record
+            output = [author_id, 'A'] + line[1:]
+
+        # unknown record type (?)
+        else:
+            continue
+
+        writer.writerow(output)
+
+if __name__ == "__main__":
+    mapper()        
